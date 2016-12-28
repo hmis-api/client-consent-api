@@ -21,6 +21,7 @@
     {
       "statusID":"769da295-22f9-41d9-b991-ada835b1e123",
       "approvalStatus":"requested",
+      "approvalStatusEffectiveDate":"08-27-2016 09:43:38.317",
       "dateCreated":"09-28-2016 09:43:38.317",
       "dateUpdated":"10-28-2016 09:44:36.311",
       "userCreate":"5341282",
@@ -30,6 +31,7 @@
     {
       "statusID":"769da295-22f9-41d9-b991-ada835b1e124",
       "approvalStatus":"rescinded",
+      "approvalStatusEffectiveDate":"08-27-2016 09:43:38.317",
       "dateCreated":"08-28-2016 09:43:38.317",
       "dateUpdated":"09-28-2016 09:44:36.311",
       "userCreate":"5341282",

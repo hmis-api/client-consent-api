@@ -4,6 +4,7 @@
   "properties":{
     "statusID":{"type":"string"},
     "approvalStatus":{"enum":["requested","granted","denied","rescinded"]},
+    "approvalStatusEffectiveDate":{"type":"string"},
     "dateCreated":{"type":"string"},
     "dateUpdated":{"type":"string"},
     "userCreate":{"type":"string"},
@@ -13,6 +14,7 @@
   "required":[
     "statusID",
     "approvalStatus",
+    "approvalStatusEffectiveDate",
     "dateCreated",
     "userCreate"  
   ]

@@ -3,6 +3,7 @@
   "type":"object",
   "properties":{
     "approvalStatus":{"enum":["requested","granted","denied","rescinded"]},
+    "approvalStatusEffectiveDate":{"type":"string"},
     "dateCreated":{"type":"string"},
     "dateUpdated":{"type":"string"},
     "userCreate":{"type":"string"},
@@ -11,6 +12,7 @@
   },
   "required":[
     "approvalStatus",
+    "approvalStatusEffectiveDate",
     "dateCreated",
     "userCreate"  
   ]
