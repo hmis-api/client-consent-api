@@ -1,0 +1,65 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "type":"object",
+  "properties":{
+    "links":{
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rel": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          }
+        },
+        "required":[
+          "rel",
+          "href"
+        ]
+      }
+    },
+    "content":{
+      "type":"array",
+      "items":{
+        "type":"object",
+        "properties":{
+          "statusID":{"type":"string"},
+          "approvalStatus":{"enum":["requested","granted","denied","rescinded"]},
+          "dateCreated":{"type":"string"},
+          "dateUpdated":{"type":"string"},
+          "userCreate":{"type":"string"},
+          "userUpdate":{"type":"string"},
+          "inactive":{"type":"boolean"}
+        }
+      },
+      "required":[
+        "statusID",
+        "approvalStatus",
+        "dateCreated",
+        "userCreate"  
+      ]
+    }
+  },    
+  "page":{
+    "type": "object",
+    "properties":{
+      "size":{"type":"integer"},
+      "totalElements":{"type": "integer"},
+      "totalPages":{"type": "integer"},
+      "number":{"type":"integer"}
+    },
+    "required":[
+      "size",
+      "totalElements",
+      "totalPages",
+      "number"
+    ]
+  },
+  "required":[
+    "links",
+    "content",
+    "page"
+  ]
+}

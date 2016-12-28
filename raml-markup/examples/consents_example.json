@@ -1,0 +1,62 @@
+{
+ "links":[
+    {
+       "rel":"first",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents?page=0&size=3"
+    },
+    {
+       "rel":"self",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents"
+    },
+    {
+       "rel":"next",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents?page=1&size=3"
+    },
+    {
+       "rel":"last",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents?page=2&size=3"
+    }
+ ],
+ "content":[
+    {
+      "id":"169da295-22f9-41d9-b991-ada835b1e123",
+      "clientId":"269da295-22f9-41d9-b991-ada835b1e123",
+      "startDate":"09-28-2016 09:43:38.317",
+      "endDate":"09-30-2016 09:43:38.317",
+      "consentDocumentationLink":"http://hslynk.org/s3-storage/kdhdu3h3uhuh",
+      "consentEntities": [
+        {"id":"2340281","entityType":"project"}, 
+        {"id":"COC-235","entityType":"coc"},
+        {"id":"8750281","entityType":"organization"}
+      ],
+      "dateCreated":"09-28-2016 09:43:38.317",
+      "dateUpdated":"10-28-2016 09:44:36.311",
+      "userCreate":"5341282",
+      "userUpdate":"5331282",
+      "inactive":false
+    },
+    {
+      "id":"987da295-22f9-41d9-b991-ada835b1e111",
+      "clientId":"432da295-22f9-41d9-b991-ada835b1e123",
+      "startDate":"09-30-2016 09:43:38.317",
+      "endDate":"10-30-2016 09:43:38.317",
+      "consentDocumentationLink":"http://hslynk.org/s3-storage/uyiuwew33445",
+      "consentEntities": [
+        {"id":"6340281","entityType":"project"}, 
+        {"id":"COC-335","entityType":"coc"},
+        {"id":"1110281","entityType":"organization"}
+      ],
+      "dateCreated":"09-28-2016 09:43:38.317",
+      "dateUpdated":"10-30-2016 09:44:36.311",
+      "userCreate":"5341282",
+      "userUpdate":"6331282",
+      "inactive":true
+    }
+  ],
+  "page":{
+    "size":3,
+    "totalElements":8,
+    "totalPages":3,
+    "number":0
+  }
+}

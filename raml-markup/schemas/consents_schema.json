@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type":"object",
+  "properties":{
+    "links":{
+      "type":"array",
+      "items": {
+        "type": "object",
+        "properties":{
+          "rel":{
+            "type":"string"
+          },
+          "href": {
+            "type": "string"
+          }
+        },
+        "required":[
+          "rel",
+          "href"
+        ]
+      }
+    },
+    "content":{
+      "type":"array",
+      "items":{
+        "type":"object", 
+        "properties":{
+          "id":{"type":"string"},
+          "clientId":{"type":"string"},
+          "startDate":{"type":"string"},
+          "endDate":{"type":"string"},
+          "consentDocumentationLink":{"type":"string"},
+          "consentEntities":{
+            "type":"array",
+            "items":{
+              "type":"object",
+              "properties":{
+                "id":{"type":"string"},
+                "entityType":{"enum": [ "organization", "project", "coc"]}
+              }
+            }
+          },
+          "dateCreated":{"type":"string"},
+          "dateUpdated":{"type":"string"},
+          "userCreate":{"type":"string"},
+          "userUpdate":{"type":"string"},
+          "inactive":{"type":"boolean"}
+        }
+      },
+      "required": [
+        "id",
+        "clientId",
+        "startDate",
+        "consentEntities",
+        "dateCreated",
+        "userCreate"]
+    },
+    "page":{
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "integer"
+        },
+        "totalElements": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "size",
+        "totalElements",
+        "totalPages",
+        "number"
+      ]
+    }
+  },
+  "required": [
+      "links",
+      "content",
+      "page"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+ "links":[
+    {
+       "rel":"first",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents/169da295-22f9-41d9-b991-ada835b1e123/statuses?page=0&size=3"
+    },
+    {
+       "rel":"self",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents/169da295-22f9-41d9-b991-ada835b1e123/statuses"
+    },
+    {
+       "rel":"next",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents/169da295-22f9-41d9-b991-ada835b1e123/statuses?page=1&size=3"
+    },
+    {
+       "rel":"last",
+       "href":"https://www.hmislynk.com/client-consent-api/rest/consents/169da295-22f9-41d9-b991-ada835b1e123/statuses?page=2&size=3"
+    }
+ ],
+ "content":[
+    {
+      "statusID":"769da295-22f9-41d9-b991-ada835b1e123",
+      "approvalStatus":"requested",
+      "dateCreated":"09-28-2016 09:43:38.317",
+      "dateUpdated":"10-28-2016 09:44:36.311",
+      "userCreate":"5341282",
+      "userUpdate":"5331282",
+      "inactive":false
+    },
+    {
+      "statusID":"769da295-22f9-41d9-b991-ada835b1e124",
+      "approvalStatus":"rescinded",
+      "dateCreated":"08-28-2016 09:43:38.317",
+      "dateUpdated":"09-28-2016 09:44:36.311",
+      "userCreate":"5341282",
+      "userUpdate":"5331282",
+      "inactive":true
+    }
+  ],
+  "page":{
+    "size":3,
+    "totalElements":8,
+    "totalPages":3,
+    "number":0
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id":"169da295-22f9-41d9-b991-ada835b1e123",
+  "clientId":"269da295-22f9-41d9-b991-ada835b1e123",
+  "startDate":"09-28-2016 09:43:38.317",
+  "endDate":"09-30-2016 09:43:38.317",
+  "consentDocumentationLink":"http://hslynk.org/s3-storage/kdhdu3h3uhuh",
+  "consentEntities": [
+    {"id":"2340281","entityType":"project"}, 
+    {"id":"COC-235","entityType":"coc"},
+    {"id":"8750281","entityType":"organization"}
+  ],
+  "dateCreated":"09-28-2016 09:43:38.317",
+  "dateUpdated":"10-28-2016 09:44:36.311",
+  "userCreate":"5341282",
+  "userUpdate":"5331282",
+  "inactive":false
+}
