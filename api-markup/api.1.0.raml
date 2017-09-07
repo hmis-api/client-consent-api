@@ -1,0 +1,708 @@
+#%RAML 1.0
+title: Client Consent API
+version: 0.1.0
+mediaType: application/json
+protocols:
+  - HTTPS
+baseUri: 'https://www.hmislynk.com/'
+securitySchemes:
+  oauth_2_0:
+    description: |
+      Supports OAuth 2.0 for authenticating all API requests.
+    type: OAuth 2.0
+    settings:
+      authorizationUri: 'https://www.hserv.com/1/oauth2/authorize'
+      accessTokenUri: 'https://api.hserv.com/1/oauth2/token'
+      authorizationGrants:
+        - authorization_code
+        - implicit
+    describedBy:
+      responses:
+        '401':
+          description: |
+            Bad or expired token. This can happen if the user or Dropbox
+            revoked or expired an access token. To fix, you should re-
+            authenticate the user.
+        '403':
+          description: |
+            Bad OAuth request (wrong consumer key, bad nonce, expired
+            timestamp...). Unfortunately, re-authenticating the user won't help here.
+      headers:
+        Authorization:
+          description: |
+            Used to send a valid OAuth 2 access token. Do not use
+            with the "access_token" query string parameter.
+          example: |
+            Authorization: Bearer czZCaGRSa3F0MzpnWDFmQmF0M2JW
+          type: string
+      queryParameters:
+        access_token:
+          description: |
+            Used to send a valid OAuth 2 access token. Do not use together with
+            the "Authorization" header
+          type: string
+types:
+  client_not_found:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  consent_id_schema:
+    type: object
+    properties:
+      consent:
+        type: object
+        properties:
+          consentId:
+            type: string
+  consent_not_found:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  consent_request_id_schema:
+    type: object
+    properties:
+      consentRequest:
+        type: object
+        properties:
+          consentRequestId:
+            type: string
+  consent_request_not_found:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  consent_request_schema:
+    type: object
+    properties:
+      consentRequest:
+        type: object
+        properties:
+          clientId:
+            type: string
+          consentRequestedFrom:
+            type: string
+          consentRequestedTo:
+            type: string
+          consentEntities:
+            type: object
+            properties:
+              consentEntities:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    consentTypeId:
+                      type: string
+                    consentEntityId:
+                      type: string
+  consent_schema:
+    type: object
+    properties:
+      consent:
+        type: object
+        properties:
+          clientId:
+            type: string
+          startTime:
+            type: string
+          endTime:
+            type: string
+          consentEntities:
+            type: object
+            properties:
+              consentEntities:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    consentTypeId:
+                      type: string
+                    consentEntityId:
+                      type: string
+  consents_request_schema:
+    type: object
+    properties:
+      consentRequests:
+        type: object
+        properties:
+          pagination:
+            type: object
+            properties:
+              from:
+                type: integer
+              returned:
+                type: integer
+              total:
+                type: integer
+              maximum:
+                type: integer
+              sort:
+                type: object
+          consentRequests:
+            type: array
+            items:
+              type: object
+              properties:
+                consentRequest:
+                  type: object
+                  properties:
+                    consentRequestId:
+                      type: string
+                    clientId:
+                      type: string
+                    consentRequestedFrom:
+                      type: string
+                    status:
+                      type: string
+                    consentEntities:
+                      type: object
+                      properties:
+                        consentEntities:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              consentTypeId:
+                                type: string
+                              consentEntityId:
+                                type: string
+  consents_schema:
+    type: object
+    properties:
+      consents:
+        type: object
+        properties:
+          pagination:
+            type: object
+            properties:
+              from:
+                type: integer
+              returned:
+                type: integer
+              total:
+                type: integer
+              maximum:
+                type: integer
+              sort:
+                type: object
+          consents:
+            type: array
+            items:
+              type: object
+              properties:
+                consent:
+                  type: object
+                  properties:
+                    consentId:
+                      type: string
+                    clientId:
+                      type: string
+                    startTime:
+                      type: string
+                    status:
+                      type: string
+                    endTime:
+                      type: string
+                    consentEntities:
+                      type: object
+                      properties:
+                        consentEntities:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              consentTypeId:
+                                type: string
+                              consentEntityId:
+                                type: string
+  id_consent_request_schema:
+    type: object
+    properties:
+      consentRequest:
+        type: object
+        properties:
+          consentRequestId:
+            type: string
+          clientId:
+            type: string
+          status:
+            type: string
+          consentRequestedFrom:
+            type: string
+          consentRequestedTo:
+            type: string
+          consentEntities:
+            type: object
+            properties:
+              consentEntities:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    consentTypeId:
+                      type: string
+                    consentEntityId:
+                      type: string
+  id_consent_schema:
+    type: object
+    properties:
+      consent:
+        type: object
+        properties:
+          consentId:
+            type: string
+          clientId:
+            type: string
+          startTime:
+            type: string
+          status:
+            type: string
+          endTime:
+            type: string
+          consentEntities:
+            type: object
+            properties:
+              consentEntities:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    consentTypeId:
+                      type: string
+                    consentEntityId:
+                      type: string
+  client_consent_request_status_schema:
+    type: object
+    properties:
+      consentRequestStatus:
+        type: object
+        properties:
+          approvalStatus:
+            type: string
+          approvalStatusEffectiveFromDate:
+            type: string
+          approvalStatusEffectiveToDate:
+            type: string
+/clients:
+  '/{clientid}':
+    /consents:
+      post:
+        description: Create client consent. NOTE- A client consent will also be created when a consent request is approved.
+        responses:
+          '200':
+            body:
+              application/json:
+                example:
+                  consent:
+                    consentId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
+                type: consent_id_schema
+                required: false
+          '404':
+            body:
+              application/json:
+                example:
+                  errors:
+                    - code: CLIENT_NOT_FOUND
+                      message: 'Client not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                type: client_not_found
+                required: false
+        body:
+          application/json:
+            example:
+              consent:
+                clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                startTime: '01-16-2017 14:37:20.351'
+                endTime: '02-16-2017 14:37:20.351'
+                consentEntities:
+                  consentEntities:
+                    - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                      consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+                    - consentTypeId: 13954e42-e873-11e6-bf01-fe55135034f3
+                      consentEntityId: 139554c8-e873-11e6-bf01-fe55135034f3
+            type: consent_schema
+            required: false
+      get:
+        description: Get consents of a client
+        responses:
+          '200':
+            body:
+              application/json:
+                example:
+                  consents:
+                    pagination:
+                      from: 0
+                      returned: 1
+                      total: 1
+                      maximum: 30
+                      sort: {}
+                    consents:
+                      - consent:
+                          consentId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
+                          clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                          startTime: '01-16-2017 14:37:20.351'
+                          status: APPROVED
+                          endTime: '01-16-2017 14:37:20.351'
+                          consentEntities:
+                            consentEntities:
+                              - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                                consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+                type: consents_schema
+                required: false
+      '/{consentid}':
+        put:
+          description: Update a client consent. The purpose of the API is to 1. Update the status of a consent (Allowed values APPROVED / REJECTED) 2. Update the status effective dates. 3. Update the consent entity types.
+          responses:
+            '201': {}
+            '404':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CLIENT_CONSENT_NOT_FOUND
+                        message: 'Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                  type: consent_not_found
+                  required: false
+          body:
+            application/json:
+              example:
+                consent:
+                  clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                  startTime: '01-16-2017 14:37:20.351'
+                  endTime: '02-16-2017 14:37:20.351'
+                  consentEntities:
+                    consentEntities:
+                      - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                        consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+                      - consentTypeId: 13954e42-e873-11e6-bf01-fe55135034f3
+                        consentEntityId: 139554c8-e873-11e6-bf01-fe55135034f3
+              type: consent_schema
+              required: false
+        delete:
+          description: Delete a client consent
+          responses:
+            '201': {}
+            '404':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CLIENT_CONSENT_NOT_FOUND
+                        message: 'Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                  type: consent_not_found
+                  required: false
+        get:
+          description: Get a client consent details
+          responses:
+            '200':
+              body:
+                application/json:
+                  example:
+                    consent:
+                      consentId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
+                      clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                      startTime: '01-16-2017 14:37:20.351'
+                      status: APPROVED
+                      endTime: '01-16-2017 14:37:20.351'
+                      consentEntities:
+                        consentEntities:
+                          - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                            consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+                  type: id_consent_schema
+                  required: false
+            '404':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CLIENT_CONSENT_NOT_FOUND
+                        message: 'Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                  type: consent_not_found
+                  required: false
+        uriParameters:
+          consentid: {}
+        /documents:
+          post:
+            description: |
+              Uploads the consent document (Verbal / signed document) for the client for a specific consent.  The content type should be multipart/form-data ( Content-Type: multipart/form-data). 
+            responses:
+              '201':
+                body:
+                  application/json:
+                    required: false
+              '404':
+                body:
+                  application/json:
+                    example:
+                      errors:
+                        - code: CLIENT_CONSENT_NOT_FOUND
+                          message: 'Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                    type: consent_not_found
+                    required: false
+            body:
+              multipart/form-data:
+                properties:
+                  formData:
+                    example: |
+                      Content-Type: multipart/form-data; boundary=WebKitFormBoundarytujNY4RwDez6d3Hk
+
+                      --WebKitFormBoundarytujNY4RwDez6d3Hk
+                      Content-Disposition: form-data; name="json"
+                      Content-Type: application/json
+
+                      { "type": "docuemnts","remarks":"Project 1 consent document" }
+
+                      --WebKitFormBoundarytujNY4RwDez6d3Hk--
+                      Content-Disposition: form-data; name="image"; filename="image.jpg"
+                      Content-Type: application/octet-stream
+
+                      ... content of image.jpg ...
+
+                      --WebKitFormBoundarytujNY4RwDez6d3Hk--
+                    type: string
+                    required: false
+          get:
+            description: |
+              Downloads all the consent documents associated with a specific consent.            
+            responses:
+              '200':
+                body:
+                  application/json:
+                    required: false
+              '404':
+                body:
+                  application/json:
+                    example:
+                      errors:
+                        - code: CLIENT_CONSENT_NOT_FOUND
+                          message: 'Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                    type: consent_not_found
+                    required: false
+    uriParameters:
+      clientid: {}
+    /consentrequests:
+      post:
+        description: Create client consent request. A consent request can be made for a specific (or multiple) consent entity types and for a specific duration. Initially the status of the consent request will be set to "REQUESTED".
+        responses:
+          '200':
+            body:
+              application/json:
+                example:
+                  consentRequest:
+                    consentRequestId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
+                type: consent_request_id_schema
+                required: false
+          '404':
+            body:
+              application/json:
+                example:
+                  errors:
+                    - code: CLIENT_NOT_FOUND
+                      message: 'Client not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                type: client_not_found
+                required: false
+        body:
+          application/json:
+            example:
+              consentRequest:
+                clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                consentRequestedFrom: '01-16-2017 14:37:20.351'
+                consentRequestedTo: '02-16-2017 14:37:20.351'
+                consentEntities:
+                  consentEntities:
+                    - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                      consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+            type: consent_request_schema
+            required: false
+      get:
+        description: Get consent requests of a client
+        responses:
+          '200':
+            body:
+              application/json:
+                example:
+                  consentRequests:
+                    pagination:
+                      from: 0
+                      returned: 1
+                      total: 1
+                      maximum: 30
+                      sort: {}
+                    consentRequests:
+                      - consentRequest:
+                          consentRequestId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
+                          clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                          consentRequestedFrom: '01-16-2017 14:37:20.351'
+                          status: APPROVED
+                          consentEntities:
+                            consentEntities:
+                              - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                                consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+                type: consents_request_schema
+                required: false
+      '/{consentrequestid}':
+        put:
+          description: Update a client consent request. Consent request can be updated only when the status is still in "REQUESTED" state.
+          responses:
+            '201': {}
+            '403':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CANNOT_UPDATE_CONSENT_REQUEST
+                        message: consent request already approved / rejected.
+                  required: false
+            '404':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CLIENT_CONSENT_REQUEST_NOT_FOUND
+                        message: 'Client consent request not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                  type: consent_request_not_found
+                  required: false
+          body:
+            application/json:
+              example:
+                consentRequest:
+                  clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                  consentRequestedFrom: '01-16-2017 14:37:20.351'
+                  consentRequestedTo: '02-16-2017 14:37:20.351'
+                  consentEntities:
+                    consentEntities:
+                      - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                        consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+              type: consent_request_schema
+              required: false
+        delete:
+          description: Delete a client consent request. Consent request can be deleted only when the status is still in "REQUESTED" state.
+          responses:
+            '201': {}
+            '403':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CANNOT_DELETE_CONSENT_REQUEST
+                        message: consent request already approved / rejected.
+                  required: false
+            '404':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CLIENT_CONSENT_REQUEST_NOT_FOUND
+                        message: 'Client consent request not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                  type: consent_request_not_found
+                  required: false
+        get:
+          description: Get details for a specific client consent request.
+          responses:
+            '200':
+              body:
+                application/json:
+                  example:
+                    consentRequest:
+                      consentRequestId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
+                      clientId: 4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8
+                      status: REQUESTED
+                      consentRequestedFrom: '01-16-2017 14:37:20.351'
+                      consentRequestedTo: '02-16-2017 14:37:20.351'
+                      consentEntities:
+                        consentEntities:
+                          - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
+                            consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
+                  type: id_consent_request_schema
+                  required: false
+            '404':
+              body:
+                application/json:
+                  example:
+                    errors:
+                      - code: CLIENT_CONSENT_REQUEST_NOT_FOUND
+                        message: 'Client consent request not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                  type: consent_request_not_found
+                  required: false
+        uriParameters:
+          consentrequestid: {}
+        /statuses:
+          put:
+            description: 'Approve or Reject client consent request. Once consent request is approved a new consent will be created for the requester project group and for the consent entity. The consent request, cannot be modified any further as it is already approved. Any changes to the duration of the consent etc. can be done on the consent directly. Allowed values for the consent request status are APPROVED / REJECTED.'
+            responses:
+              '404':
+                body:
+                  application/json:
+                    example:
+                      errors:
+                        - code: CLIENT_CONSENT_NOT_FOUND
+                          message: 'Client consent not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
+                    type: consent_not_found
+                    required: false
+            body:
+              application/json:
+                example: |-
+                  {
+                     "consentRequestStatus":{
+                        "status":"APPROVED",
+                        "statusEffectiveFrom":"01-16-2017 14:37:20.351",
+                        "statusEffectiveTo":"01-24-2017 14:37:20.351",
+                        "remarks":" Approved"
+                     }
+                  }
+
+
+                  {
+                     "consentRequestStatus":{
+                        "status":"REJECTED",
+                        "remarks":" Client didnot honor the request"
+                     }
+                  }
+                type: client_consent_request_status_schema
+                required: false
+/consententitytypes:
+  get:
+    description: Get consent entity types.
+    responses:
+      '200':
+        body:
+          application/json:
+            example:
+              consententitytypes:
+                pagination:
+                  from: 0
+                  returned: 2
+                  total: 30
+                  maximum: 30
+                  sort: {}
+                consententitytypes:
+                  - consententitytype:
+                      entityTypeId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
+                      entityType: Project
+                  - consententitytype:
+                      entityTypeId: 2a484200-e2cb-4044-bee9-f0bbcea7eff3
+                      entityType: coc
+            required: false
+
