@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "consents": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "integer"
+            },
+            "returned": {
+              "type": "integer"
+            },
+            "total": {
+              "type": "integer"
+            },
+            "maximum": {
+              "type": "integer"
+            },
+            "sort": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "required": [
+            "from",
+            "returned",
+            "total",
+            "maximum",
+            "sort"
+          ]
+        },
+        "consents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "consent": {
+                "type": "object",
+                "properties": {
+                  "consentId": {
+                    "type": "string"
+                  },
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "startTime": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "endTime": {
+                    "type": "string"
+                  },
+                  "consentEntities": {
+                    "type": "object",
+                    "properties": {
+                      "consentEntities": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "consentTypeId": {
+                              "type": "string"
+                            },
+                            "consentEntityId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "consentTypeId",
+                            "consentEntityId"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "consentEntities"
+                    ]
+                  }
+                },
+                "required": [
+                  "consentId",
+                  "clientId",
+                  "startTime",
+                  "status",
+                  "endTime",
+                  "consentEntities"
+                ]
+              }
+            },
+            "required": [
+              "consent"
+            ]
+          }
+        }
+      },
+      "required": [
+        "pagination",
+        "consents"
+      ]
+    }
+  },
+  "required": [
+    "consents"
+  ]
+}

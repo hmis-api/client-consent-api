@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "consentRequest": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string"
+        },
+        "consentRequestedFrom": {
+          "type": "string"
+        },
+        "consentRequestedTo": {
+          "type": "string"
+        },
+        "consentEntities": {
+          "type": "object",
+          "properties": {
+            "consentEntities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "consentTypeId": {
+                    "type": "string"
+                  },
+                  "consentEntityId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "consentTypeId",
+                  "consentEntityId"
+                ]
+              }
+            }
+          },
+          "required": [
+            "consentEntities"
+          ]
+        }
+      },
+      "required": [
+        "clientId",
+        "consentRequestedFrom",
+        "consentRequestedTo",
+        "consentEntities"
+      ]
+    }
+  },
+  "required": [
+    "consentRequest"
+  ]
+}

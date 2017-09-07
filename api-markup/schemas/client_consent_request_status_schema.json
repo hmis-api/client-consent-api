@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "consentRequestStatus": {
+      "type": "object",
+      "properties": {
+        "approvalStatus": {
+          "type": "string"
+        },
+        "approvalStatusEffectiveFromDate": {
+          "type": "string"
+        },
+        "approvalStatusEffectiveToDate": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "approvalStatus",
+        "approvalStatusEffectiveFromDate",
+        "approvalStatusEffectiveToDate"
+      ]
+    }
+  },
+  "required": [
+    "consentRequestStatus"
+  ]
+}

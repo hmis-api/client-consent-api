@@ -1,0 +1,16 @@
+{
+   "consentRequestStatus":{
+      "status":"APPROVED",
+      "statusEffectiveFrom":"01-16-2017 14:37:20.351",
+      "statusEffectiveTo":"01-24-2017 14:37:20.351",
+      "remarks":" Approved"
+   }
+}
+
+
+{
+   "consentRequestStatus":{
+      "status":"REJECTED",
+      "remarks":" Client didnot honor the request"
+   }
+}

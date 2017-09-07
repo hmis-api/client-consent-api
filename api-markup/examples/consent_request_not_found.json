@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "code": "CLIENT_CONSENT_REQUEST_NOT_FOUND",
+      "message": "Client consent request not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa"
+    }
+  ]
+}

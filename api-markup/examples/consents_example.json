@@ -1,0 +1,32 @@
+{
+   "consents":{
+      "pagination":{
+         "from":0,
+         "returned":1,
+         "total":1,
+         "maximum":30,
+         "sort":{
+
+         }
+      },
+      "consents":[
+         {
+            "consent":{
+               "consentId":"2a484199-e2cb-4044-bee9-f0bbcea7eff3",
+               "clientId":"4cfe2ac2-43af-4d6d-9ee8-0e8fac5e3dc8",
+               "startTime":"01-16-2017 14:37:20.351",
+              "status":"APPROVED",
+               "endTime":"01-16-2017 14:37:20.351",
+               "consentEntities":{
+                  "consentEntities":[
+                     {
+                        "consentTypeId":"bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9",
+                        "consentEntityId":"0d61a895-197a-4e4c-8626-a8b78d9e18f1"
+                     }
+                  ]
+               }
+            }
+         }
+      ]
+   }
+}
