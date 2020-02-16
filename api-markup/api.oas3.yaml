@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Client Consent
-  version: 1.0.1
+  version: 1.1.0
   description: |
        **Note :**
               Please note that the partial updates are supported via PUT APIs. However, Note that If "null" value is passed for any element, in the PUT request body, it will be ignored. An empty string value should be sent (instead of "null" value) for the elements that need to be updated with NULL values.
@@ -19,7 +19,26 @@ paths:
                 consent:
                   consentId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
               schema:
-                $ref: '#/components/schemas/consent_id_schema'
+                {
+                  "type": "object",
+                  "required": [
+                    "consent"
+                  ],
+                  "properties": {
+                    "consent": {
+                      "type": "object",
+                      "required": [
+                        "consentId"
+                      ],
+                      "properties": {
+                        "consentId": {
+                          "type": "string",
+                          "format": "uuid",
+                        }
+                      }
+                    }
+                  }
+                }
         '404':
           description: ''
           content:
@@ -29,7 +48,32 @@ paths:
                   - code: CLIENT_NOT_FOUND
                     message: 'Client not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
               schema:
-                $ref: '#/components/schemas/client_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: >-
         Create client consent. NOTE- A client consent will also be created when
         a consent request is approved.
@@ -49,7 +93,65 @@ paths:
                     - consentTypeId: 13954e42-e873-11e6-bf01-fe55135034f3
                       consentEntityId: 139554c8-e873-11e6-bf01-fe55135034f3
             schema:
-              $ref: '#/components/schemas/consent_schema'
+              {
+                "type": "object",
+                "required": [
+                  "consent"
+                ],
+                "properties": {
+                  "consent": {
+                    "type": "object",
+                    "required": [
+                      "clientId",
+                      "startTime",
+                      "endTime",
+                      "consentEntities"
+                    ],
+                    "properties": {
+                      "clientId": {
+                        "type": "string",
+                        "format": "uuid",
+                      },
+                      "startTime": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                      },
+                      "endTime": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                      },
+                      "consentEntities": {
+                        "type": "object",
+                        "required": [
+                          "consentEntities"
+                        ],
+                        "properties": {
+                          "consentEntities": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "consentTypeId",
+                                "consentEntityId"
+                              ],
+                              "properties": {
+                                "consentTypeId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                },
+                                "consentEntityId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
         required: true
     get:
       responses:
@@ -77,7 +179,121 @@ paths:
                             - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
                               consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
               schema:
-                $ref: '#/components/schemas/consents_schema'
+                {
+                  "type": "object",
+                  "required": [
+                    "consents"
+                  ],
+                  "properties": {
+                    "consents": {
+                      "type": "object",
+                      "required": [
+                        "pagination",
+                        "consents"
+                      ],
+                      "properties": {
+                        "pagination": {
+                          "type": "object",
+                          "required": [
+                            "from",
+                            "returned",
+                            "total",
+                            "maximum",
+                            "sort"
+                          ],
+                          "properties": {
+                            "from": {
+                              "type": "integer"
+                            },
+                            "returned": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "maximum": {
+                              "type": "integer"
+                            },
+                            "sort": {
+                              "type": "object"
+                            }
+                          }
+                        },
+                        "consents": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "consent"
+                            ],
+                            "properties": {
+                              "consent": {
+                                "type": "object",
+                                "required": [
+                                  "consentId",
+                                  "clientId",
+                                  "startTime",
+                                  "status",
+                                  "endTime",
+                                  "consentEntities"
+                                ],
+                                "properties": {
+                                  "consentId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  },
+                                  "clientId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  },
+                                  "startTime": {
+                                    "type": "string",
+                                    "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                  },
+                                  "endTime": {
+                                    "type": "string",
+                                    "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                                  },
+                                  "consentEntities": {
+                                    "type": "object",
+                                    "required": [
+                                      "consentEntities"
+                                    ],
+                                    "properties": {
+                                      "consentEntities": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "required": [
+                                            "consentTypeId",
+                                            "consentEntityId"
+                                          ],
+                                          "properties": {
+                                            "consentTypeId": {
+                                              "type": "string",
+                                              "format": "uuid",
+                                            },
+                                            "consentEntityId": {
+                                              "type": "string",
+                                              "format": "uuid",
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: Get consents of a client
       operationId: GET_clients-clientid-consents
     parameters:
@@ -102,7 +318,32 @@ paths:
                       Client consent not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: >-
         Update a client consent. The purpose of the API is to 1. Update the
         status of a consent (Allowed values APPROVED / REJECTED) 2. Update the
@@ -123,7 +364,65 @@ paths:
                     - consentTypeId: 13954e42-e873-11e6-bf01-fe55135034f3
                       consentEntityId: 139554c8-e873-11e6-bf01-fe55135034f3
             schema:
-              $ref: '#/components/schemas/consent_schema'
+              {
+                "type": "object",
+                "required": [
+                  "consent"
+                ],
+                "properties": {
+                  "consent": {
+                    "type": "object",
+                    "required": [
+                      "clientId",
+                      "startTime",
+                      "endTime",
+                      "consentEntities"
+                    ],
+                    "properties": {
+                      "clientId": {
+                        "type": "string",
+                        "format": "uuid",
+                      },
+                      "startTime": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                      },
+                      "endTime": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                      },
+                      "consentEntities": {
+                        "type": "object",
+                        "required": [
+                          "consentEntities"
+                        ],
+                        "properties": {
+                          "consentEntities": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "consentTypeId",
+                                "consentEntityId"
+                              ],
+                              "properties": {
+                                "consentTypeId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                },
+                                "consentEntityId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
         required: true
     delete:
       responses:
@@ -140,7 +439,32 @@ paths:
                       Client consent not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: Delete a client consent
       operationId: DELETE_clients-clientid-consents-consentid
     get:
@@ -161,7 +485,74 @@ paths:
                       - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
                         consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
               schema:
-                $ref: '#/components/schemas/id_consent_schema'
+                {
+                  "type": "object",
+                  "required": [
+                    "consent"
+                  ],
+                  "properties": {
+                    "consent": {
+                      "type": "object",
+                      "required": [
+                        "consentId",
+                        "clientId",
+                        "startTime",
+                        "status",
+                        "endTime",
+                        "consentEntities"
+                      ],
+                      "properties": {
+                        "consentId": {
+                          "type": "string",
+                          "format": "uuid",
+                        },
+                        "clientId": {
+                          "type": "string",
+                          "format": "uuid",
+                        },
+                        "startTime": {
+                          "type": "string",
+                          "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                        },
+                        "status": {
+                          "type": "string",
+                        },
+                        "endTime": {
+                          "type": "string",
+                          "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                        },
+                        "consentEntities": {
+                          "type": "object",
+                          "required": [
+                            "consentEntities"
+                          ],
+                          "properties": {
+                            "consentEntities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "consentTypeId",
+                                  "consentEntityId"
+                                ],
+                                "properties": {
+                                  "consentTypeId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  },
+                                  "consentEntityId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
         '404':
           description: ''
           content:
@@ -173,7 +564,32 @@ paths:
                       Client consent not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: Get a client consent details
       operationId: GET_clients-clientid-consents-consentid
     parameters:
@@ -203,7 +619,32 @@ paths:
                       Client consent not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: >
         Uploads the consent document (Verbal / signed document) for the client
         for a specific consent.  The content type should be multipart/form-data
@@ -261,7 +702,32 @@ paths:
                       Client consent not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: |
         Downloads all the consent documents associated with a specific consent.
       operationId: GET_clients-clientid-consents-consentid-documents
@@ -287,7 +753,26 @@ paths:
                 consentRequest:
                   consentRequestId: 2a484199-e2cb-4044-bee9-f0bbcea7eff3
               schema:
-                $ref: '#/components/schemas/consent_request_id_schema'
+                {
+                  "type": "object",
+                  "required": [
+                    "consentRequest"
+                  ],
+                  "properties": {
+                    "consentRequest": {
+                      "type": "object",
+                      "required": [
+                        "consentRequestId"
+                      ],
+                      "properties": {
+                        "consentRequestId": {
+                          "type": "string",
+                          "format": "uuid",
+                        }
+                      }
+                    }
+                  }
+                }
         '404':
           description: ''
           content:
@@ -297,7 +782,32 @@ paths:
                   - code: CLIENT_NOT_FOUND
                     message: 'Client not found : e9a4a447-833f-4c29-a3b6-f966a0a753aa'
               schema:
-                $ref: '#/components/schemas/client_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: >-
         Create client consent request. A consent request can be made for a
         specific (or multiple) consent entity types and for a specific duration.
@@ -316,7 +826,66 @@ paths:
                     - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
                       consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
             schema:
-              $ref: '#/components/schemas/consent_request_schema'
+              {
+                "type": "object",
+                "required": [
+                  "consentRequest"
+                ],
+                "properties": {
+                  "consentRequest": {
+                    "type": "object",
+                    "required": [
+                      "clientId",
+                      "consentRequestedFrom",
+                      "consentRequestedTo",
+                      "consentEntities"
+                    ],
+                    "properties": {
+                      "clientId": {
+                        "type": "string",
+                        "format": "uuid",
+                      },
+                      "consentRequestedFrom": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+
+                      },
+                      "consentRequestedTo": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                      },
+                      "consentEntities": {
+                        "type": "object",
+                        "required": [
+                          "consentEntities"
+                        ],
+                        "properties": {
+                          "consentEntities": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "consentTypeId",
+                                "consentEntityId"
+                              ],
+                              "properties": {
+                                "consentTypeId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                },
+                                "consentEntityId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
         required: true
     get:
       responses:
@@ -343,7 +912,116 @@ paths:
                             - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
                               consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
               schema:
-                $ref: '#/components/schemas/consents_request_schema'
+                {
+                  "type": "object",
+                  "required": [
+                    "consentRequests"
+                  ],
+                  "properties": {
+                    "consentRequests": {
+                      "type": "object",
+                      "required": [
+                        "pagination",
+                        "consentRequests"
+                      ],
+                      "properties": {
+                        "pagination": {
+                          "type": "object",
+                          "required": [
+                            "from",
+                            "returned",
+                            "total",
+                            "maximum",
+                            "sort"
+                          ],
+                          "properties": {
+                            "from": {
+                              "type": "integer"
+                            },
+                            "returned": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "maximum": {
+                              "type": "integer"
+                            },
+                            "sort": {
+                              "type": "object"
+                            }
+                          }
+                        },
+                        "consentRequests": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "consentRequest"
+                            ],
+                            "properties": {
+                              "consentRequest": {
+                                "type": "object",
+                                "required": [
+                                  "consentRequestId",
+                                  "clientId",
+                                  "consentRequestedFrom",
+                                  "status",
+                                  "consentEntities"
+                                ],
+                                "properties": {
+                                  "consentRequestId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  },
+                                  "clientId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  },
+                                  "consentRequestedFrom": {
+                                    "type": "string",
+                                    "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                  },
+                                  "consentEntities": {
+                                    "type": "object",
+                                    "required": [
+                                      "consentEntities"
+                                    ],
+                                    "properties": {
+                                      "consentEntities": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "required": [
+                                            "consentTypeId",
+                                            "consentEntityId"
+                                          ],
+                                          "properties": {
+                                            "consentTypeId": {
+                                              "type": "string",
+                                              "format": "uuid",
+                                            },
+                                            "consentEntityId": {
+                                              "type": "string",
+                                              "format": "uuid",
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: Get consent requests of a client
       operationId: GET_clients-clientid-consentrequests
     parameters:
@@ -361,7 +1039,33 @@ paths:
           description: ''
           content:
             application/json:
-              schema:
+                schema:
+                  {
+                    "type": "object",
+                    "required": [
+                      "errors"
+                    ],
+                    "properties": {
+                      "errors": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "code",
+                            "message"
+                          ],
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                            },
+                            "message": {
+                              "type": "string",
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 example:
                   errors:
                     - code: CANNOT_UPDATE_CONSENT_REQUEST
@@ -377,7 +1081,32 @@ paths:
                       Client consent request not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_request_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: >-
         Update a client consent request. Consent request can be updated only
         when the status is still in "REQUESTED" state.
@@ -395,7 +1124,65 @@ paths:
                     - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
                       consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
             schema:
-              $ref: '#/components/schemas/consent_request_schema'
+              {
+                "type": "object",
+                "required": [
+                  "consentRequest"
+                ],
+                "properties": {
+                  "consentRequest": {
+                    "type": "object",
+                    "required": [
+                      "clientId",
+                      "consentRequestedFrom",
+                      "consentRequestedTo",
+                      "consentEntities"
+                    ],
+                    "properties": {
+                      "clientId": {
+                        "type": "string",
+                        "format": "uuid",
+                      },
+                      "consentRequestedFrom": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                      },
+                      "consentRequestedTo": {
+                        "type": "string",
+                        "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                      },
+                      "consentEntities": {
+                        "type": "object",
+                        "required": [
+                          "consentEntities"
+                        ],
+                        "properties": {
+                          "consentEntities": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "consentTypeId",
+                                "consentEntityId"
+                              ],
+                              "properties": {
+                                "consentTypeId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                },
+                                "consentEntityId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
         required: true
     delete:
       responses:
@@ -405,7 +1192,33 @@ paths:
           description: ''
           content:
             application/json:
-              schema:
+                schema:
+                  {
+                    "type": "object",
+                    "required": [
+                      "errors"
+                    ],
+                    "properties": {
+                      "errors": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "code",
+                            "message"
+                          ],
+                          "properties": {
+                            "code": {
+                              "type": "string",
+                            },
+                            "message": {
+                              "type": "string",
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 example:
                   errors:
                     - code: CANNOT_DELETE_CONSENT_REQUEST
@@ -421,7 +1234,32 @@ paths:
                       Client consent request not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_request_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: >-
         Delete a client consent request. Consent request can be deleted only
         when the status is still in "REQUESTED" state.
@@ -444,7 +1282,74 @@ paths:
                       - consentTypeId: bd4f1ad9-5e6e-495d-9d49-b8fdcff38bd9
                         consentEntityId: 0d61a895-197a-4e4c-8626-a8b78d9e18f1
               schema:
-                $ref: '#/components/schemas/id_consent_request_schema'
+                {
+                  "type": "object",
+                  "required": [
+                    "consentRequest"
+                  ],
+                  "properties": {
+                    "consentRequest": {
+                      "type": "object",
+                      "required": [
+                        "consentRequestId",
+                        "clientId",
+                        "status",
+                        "consentRequestedFrom",
+                        "consentRequestedTo",
+                        "consentEntities"
+                      ],
+                      "properties": {
+                        "consentRequestId": {
+                          "type": "string",
+                          "format": "uuid",
+                        },
+                        "clientId": {
+                          "type": "string",
+                          "format": "uuid",
+                        },
+                        "status": {
+                          "type": "string",
+                        },
+                        "consentRequestedFrom": {
+                          "type": "string",
+                          "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                        },
+                        "consentRequestedTo": {
+                          "type": "string",
+                          "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                        },
+                        "consentEntities": {
+                          "type": "object",
+                          "required": [
+                            "consentEntities"
+                          ],
+                          "properties": {
+                            "consentEntities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "consentTypeId",
+                                  "consentEntityId"
+                                ],
+                                "properties": {
+                                  "consentTypeId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  },
+                                  "consentEntityId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
         '404':
           description: ''
           content:
@@ -456,7 +1361,32 @@ paths:
                       Client consent request not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_request_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: Get details for a specific client consent request.
       operationId: GET_clients-clientid-consentrequests-consentrequestid
     parameters:
@@ -484,7 +1414,32 @@ paths:
                       Client consent not found :
                       e9a4a447-833f-4c29-a3b6-f966a0a753aa
               schema:
-                $ref: '#/components/schemas/consent_not_found'
+                {
+                  "type": "object",
+                  "required": [
+                    "errors"
+                  ],
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                          },
+                          "message": {
+                            "type": "string",
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
       description: >-
         Approve or Reject client consent request. Once consent request is
         approved a new consent will be created for the requester project group
@@ -508,7 +1463,42 @@ paths:
                   approvalStatusEffectiveToDate: '01-24-2017 14:37:20.351'
                   remarks: ' Client did not honor the request'
             schema:
-              $ref: '#/components/schemas/client_consent_request_statuses_schema'
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "consentRequestStatus"
+                  ],
+                  "properties": {
+                    "consentRequestStatus": {
+                      "type": "object",
+                      "required": [
+                        "approvalStatus",
+                        "approvalStatusEffectiveFromDate",
+                        "approvalStatusEffectiveToDate",
+                        "remarks"
+                      ],
+                      "properties": {
+                        "approvalStatus": {
+                          "type": "string",
+                        },
+                        "approvalStatusEffectiveFromDate": {
+                          "type": "string",
+                          "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                        },
+                        "approvalStatusEffectiveToDate": {
+                          "type": "string",
+                          "format": "MM-dd-YYYY HH:mm:ss.SSS"
+                        },
+                        "remarks": {
+                          "type": "string",
+                        }
+                      }
+                    }
+                  }
+                }
+              }
         required: true
     parameters:
       - name: consentrequestid
@@ -528,7 +1518,78 @@ paths:
           description: ''
           content:
             application/json:
-              schema:
+                schema:
+                  {
+                    "type": "object",
+                    "required": [
+                      "consententitytypes"
+                    ],
+                    "properties": {
+                      "consententitytypes": {
+                        "type": "object",
+                        "required": [
+                          "pagination",
+                          "consententitytypes"
+                        ],
+                        "properties": {
+                          "pagination": {
+                            "type": "object",
+                            "required": [
+                              "from",
+                              "returned",
+                              "total",
+                              "maximum",
+                              "sort"
+                            ],
+                            "properties": {
+                              "from": {
+                                "type": "integer"
+                              },
+                              "returned": {
+                                "type": "integer"
+                              },
+                              "total": {
+                                "type": "integer"
+                              },
+                              "maximum": {
+                                "type": "integer"
+                              },
+                              "sort": {
+                                "type": "object"
+                              }
+                            }
+                          },
+                          "consententitytypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "consententitytype"
+                              ],
+                              "properties": {
+                                "consententitytype": {
+                                  "type": "object",
+                                  "required": [
+                                    "entityTypeId",
+                                    "entityType"
+                                  ],
+                                  "properties": {
+                                    "entityTypeId": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                    },
+                                    "entityType": {
+                                      "type": "string",
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 example:
                   consententitytypes:
                     pagination:
@@ -547,405 +1608,7 @@ paths:
       description: Get consent entity types.
       operationId: GET_consententitytypes
 components:
-  schemas:
-    client_not_found:
-      required:
-        - errors
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            required:
-              - code
-              - message
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-    consent_id_schema:
-      required:
-        - consent
-      type: object
-      properties:
-        consent:
-          required:
-            - consentId
-          type: object
-          properties:
-            consentId:
-              type: string
-    consent_not_found:
-      required:
-        - errors
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            required:
-              - code
-              - message
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-    consent_request_id_schema:
-      required:
-        - consentRequest
-      type: object
-      properties:
-        consentRequest:
-          required:
-            - consentRequestId
-          type: object
-          properties:
-            consentRequestId:
-              type: string
-    consent_request_not_found:
-      required:
-        - errors
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            required:
-              - code
-              - message
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-    consent_request_schema:
-      required:
-        - consentRequest
-      type: object
-      properties:
-        consentRequest:
-          required:
-            - clientId
-            - consentRequestedFrom
-            - consentRequestedTo
-            - consentEntities
-          type: object
-          properties:
-            clientId:
-              type: string
-            consentRequestedFrom:
-              type: string
-            consentRequestedTo:
-              type: string
-            consentEntities:
-              required:
-                - consentEntities
-              type: object
-              properties:
-                consentEntities:
-                  type: array
-                  items:
-                    required:
-                      - consentTypeId
-                      - consentEntityId
-                    type: object
-                    properties:
-                      consentTypeId:
-                        type: string
-                      consentEntityId:
-                        type: string
-    consent_schema:
-      required:
-        - consent
-      type: object
-      properties:
-        consent:
-          required:
-            - clientId
-            - startTime
-            - endTime
-            - consentEntities
-          type: object
-          properties:
-            clientId:
-              type: string
-            startTime:
-              type: string
-            endTime:
-              type: string
-            consentEntities:
-              required:
-                - consentEntities
-              type: object
-              properties:
-                consentEntities:
-                  type: array
-                  items:
-                    required:
-                      - consentTypeId
-                      - consentEntityId
-                    type: object
-                    properties:
-                      consentTypeId:
-                        type: string
-                      consentEntityId:
-                        type: string
-    consents_request_schema:
-      required:
-        - consentRequests
-      type: object
-      properties:
-        consentRequests:
-          required:
-            - pagination
-            - consentRequests
-          type: object
-          properties:
-            pagination:
-              required:
-                - from
-                - returned
-                - total
-                - maximum
-                - sort
-              type: object
-              properties:
-                from:
-                  type: integer
-                returned:
-                  type: integer
-                total:
-                  type: integer
-                maximum:
-                  type: integer
-                sort:
-                  type: object
-            consentRequests:
-              type: array
-              items:
-                required:
-                  - consentRequest
-                type: object
-                properties:
-                  consentRequest:
-                    required:
-                      - consentRequestId
-                      - clientId
-                      - consentRequestedFrom
-                      - status
-                      - consentEntities
-                    type: object
-                    properties:
-                      consentRequestId:
-                        type: string
-                      clientId:
-                        type: string
-                      consentRequestedFrom:
-                        type: string
-                      status:
-                        type: string
-                      consentEntities:
-                        required:
-                          - consentEntities
-                        type: object
-                        properties:
-                          consentEntities:
-                            type: array
-                            items:
-                              required:
-                                - consentTypeId
-                                - consentEntityId
-                              type: object
-                              properties:
-                                consentTypeId:
-                                  type: string
-                                consentEntityId:
-                                  type: string
-    consents_schema:
-      required:
-        - consents
-      type: object
-      properties:
-        consents:
-          required:
-            - pagination
-            - consents
-          type: object
-          properties:
-            pagination:
-              required:
-                - from
-                - returned
-                - total
-                - maximum
-                - sort
-              type: object
-              properties:
-                from:
-                  type: integer
-                returned:
-                  type: integer
-                total:
-                  type: integer
-                maximum:
-                  type: integer
-                sort:
-                  type: object
-            consents:
-              type: array
-              items:
-                required:
-                  - consent
-                type: object
-                properties:
-                  consent:
-                    required:
-                      - consentId
-                      - clientId
-                      - startTime
-                      - status
-                      - endTime
-                      - consentEntities
-                    type: object
-                    properties:
-                      consentId:
-                        type: string
-                      clientId:
-                        type: string
-                      startTime:
-                        type: string
-                      status:
-                        type: string
-                      endTime:
-                        type: string
-                      consentEntities:
-                        required:
-                          - consentEntities
-                        type: object
-                        properties:
-                          consentEntities:
-                            type: array
-                            items:
-                              required:
-                                - consentTypeId
-                                - consentEntityId
-                              type: object
-                              properties:
-                                consentTypeId:
-                                  type: string
-                                consentEntityId:
-                                  type: string
-    id_consent_request_schema:
-      required:
-        - consentRequest
-      type: object
-      properties:
-        consentRequest:
-          required:
-            - consentRequestId
-            - clientId
-            - status
-            - consentRequestedFrom
-            - consentRequestedTo
-            - consentEntities
-          type: object
-          properties:
-            consentRequestId:
-              type: string
-            clientId:
-              type: string
-            status:
-              type: string
-            consentRequestedFrom:
-              type: string
-            consentRequestedTo:
-              type: string
-            consentEntities:
-              required:
-                - consentEntities
-              type: object
-              properties:
-                consentEntities:
-                  type: array
-                  items:
-                    required:
-                      - consentTypeId
-                      - consentEntityId
-                    type: object
-                    properties:
-                      consentTypeId:
-                        type: string
-                      consentEntityId:
-                        type: string
-    id_consent_schema:
-      required:
-        - consent
-      type: object
-      properties:
-        consent:
-          required:
-            - consentId
-            - clientId
-            - startTime
-            - status
-            - endTime
-            - consentEntities
-          type: object
-          properties:
-            consentId:
-              type: string
-            clientId:
-              type: string
-            startTime:
-              type: string
-            status:
-              type: string
-            endTime:
-              type: string
-            consentEntities:
-              required:
-                - consentEntities
-              type: object
-              properties:
-                consentEntities:
-                  type: array
-                  items:
-                    required:
-                      - consentTypeId
-                      - consentEntityId
-                    type: object
-                    properties:
-                      consentTypeId:
-                        type: string
-                      consentEntityId:
-                        type: string
-    client_consent_request_statuses_schema:
-      type: array
-      items:
-        required:
-          - consentRequestStatus
-        type: object
-        properties:
-          consentRequestStatus:
-            required:
-              - approvalStatus
-              - approvalStatusEffectiveFromDate
-              - approvalStatusEffectiveToDate
-            type: object
-            properties:
-              approvalStatus:
-                type: string
-              approvalStatusEffectiveFromDate:
-                type: string
-              approvalStatusEffectiveToDate:
-                type: string
-              remarks:
-                type: string
+
   responses: {}
   parameters: {}
   examples: {}
